@@ -44,16 +44,16 @@
 ## Language Model
 '자연어'의 법칙을 컴퓨터로 모사한 모델로 주어진 단어들로부터 그 **다음에 등장한 단어의 확률을 예측**하는 방식으로 학습한다. 다음의 등장할 단어를 잘 예측하는 모델은 그 **언어의 특성이 잘 반영된 모델**이자, **문맥**을 잘 계산하는 좋은 언어 모델이다.
 
-### **Markov Chain Model**
+### **1. Markov Chain Model**
 첫 번째 단어가 오면 vocab중 그 다음에 올 단어의 가능성을 구하는 방식.
 * 확률 기반의 언어 모델
 * 초기 언어 모델은 다음의 단어나 문장이 나올 확률을 통계와 단어의 n-gram을 기반으로 계산
 * 딥러닝 기반의 언어모델은 **해당 확률을 최대로 하도록 네트워크를 학습**
 
-### **RNN Model**
+### **2. Basic RNN Model**
 이전 state 정보가 다음 state를 예측하는데 사용됨으로써, 시계열 데이터 처리에 특화. 마지막 출력은 앞선 단어들의 `문맥`을 고려해서 만들어진 최종 출력 vector -> Context vector. 출력된 context vector 값에 대해 classification layer를 붙이면 문장 분류를 위한 신경망모델이 된다.
 
-### **Seq2Seq Model**
+### **3. Seq2Seq Model**
 
 Seq2Seq 모델은 Encoder layer와 Decoder layer, Context vector로 이루어진다. 
 
@@ -62,7 +62,7 @@ Seq2Seq 모델은 Encoder layer와 Decoder layer, Context vector로 이루어진
 * Decoder layer : 획든된 Context vector를 input으로 하여 기계번역 시작.
 * Contet vector : Incoder RNN cell의 마지막 시점 hidden state. Decoder RNN cell의 첫 번째 input hidden state로 context vector를 사용.
 
-![Seq2Seq 작동원리](./img/seq2seq.jpg)
+![Seq2Seq 작동원리](./img/Seq2Seq.jpg)
 
 seq2seq은 training 과 test의 작동방식이 조금 다르다. training 할 때는 `<sos>` i love you를 입력받았을 때 i love you`<eos>`가 나와야 된다고 정답을 알려주며 훈련하고 test 할 때는 context 벡터와 `<sos>`만을 입력받은 후에 다음에 올 단어를 예측한다.
 So, decoder는 context vector(incoder 마지막 RNN cell의 hidden state)와 `<sos>`를 입력값으로 다음에 올 단어 예측을 시작한다.
@@ -72,7 +72,7 @@ So, decoder는 context vector(incoder 마지막 RNN cell의 hidden state)와 `<s
 > * 고정된 context vector 사이즈로 인해 긴 Sequence에 대한 정보를 함축하기 어려움
 > * 모든 token이 영향을 미치니, 중요하지 않은 token도 영향을 줌.
 
-### **Attention Model**
+### **4. Attention Model**
 중요한 Feature는 더욱 중요하게 고려하는 것이 Attention의 모티브. 기존 Seq2Seq에서는 RNN의 최종 output인 Context vector만을 활용했지만, Attention에서는 인코더 RNN셀의 각각 output을 활용한다. Decoder에서는 매 step마다 RNN셀의 output을 이용해 dynamic하게 Context vector 생성하여 다음에 올 단어를 예측한다.
 
 **[작동 원리]**
@@ -89,7 +89,7 @@ So, decoder는 context vector(incoder 마지막 RNN cell의 hidden state)와 `<s
 
 > Attention model은 seq2seq의 encoder, decoder의 성능을 크게 향상시키며 attention weight로 인한 dynamic context vector를 획득했다. 다만, 여전히 RNN이 순차적으로 연산이 이루어짐에 따라 **연산 속도가 느리다.**
 
-### **Transformer Model**
+### **5. Transformer Model**
 attention model에서 RNN을 제거하고 데이터를 병렬화함에 따라 더 빠른 학습이 가능하다.
 
 #### **Self-Attention, Multi Head Attention**

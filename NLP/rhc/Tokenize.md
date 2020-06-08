@@ -27,7 +27,7 @@ Tokenizer는 크게 3가지 방식으로 분류된다.
 OOV의 문제를 해결하기 위해 최근에는 데이터 압축 기법인 BPE 알고리즘을 통해 Subword Unit에 대한 사전을 만드는 기법이 많이 활용되고 있다. 빈도수가 높은 Subword Unit들을 병합시켜 나가면서 최종적으로 자주 나오는 단어는 그 자체를 그대로 저장하고 덜 나오는 단어는 subword로 나누어서 저장하므로 효율적인 사전 관리를 통해 OOV를 줄이는 목적을 가지고 있다. BPE기반의 tokenizer들은 굉장히 낮은 OOV를 보이며 접두사, 접미사가 비교적 규치적으로 잘 활용되는 영어의 경우 좋은 효과를 보인다. 다만 한글에 경우 워낙 변형이 다양하여 잘 동작하지 않을 수 있다는 한계점이 있다.
 
 #### 관련 Tokenizer
-> sentencepiece
+> SentencePiece, BPE를 변형한 WordPieceModel(WPM)
 
 ## 비교하기
 BPE를 대표하는 오픈소스 `SentencePiece`와 형태소 기반의 `Mecab`, 두 가지 tokenizer를 간단하게 비교하였다.
@@ -44,7 +44,7 @@ BPE를 대표하는 오픈소스 `SentencePiece`와 형태소 기반의 `Mecab`,
 
 
 ## 결론
-나라면 한국어 분석에 대해서는 SentencePiece보다는 형태소 분석기 기반의 Mecab을 사용할 것 같다. 의미 단위를 더 잘 포착하기도 하고 분석 시간도 다른 KoNLPy 대비 매우 빠르기 때문에 Soynlp로 띄어쓰기를 해주고 Mecab 사용자 사전에 신조어등을 넣어주면 훨씬 좋은 Tokenizing이 될 것 같다.
+나라면 한국어 분석에 대해서는 SentencePiece보다는 형태소 분석기 기반의 Mecab을 사용할 것 같다. 의미 단위를 더 잘 포착하기도 하고 분석 시간도 다른 KoNLPy 대비 매우 빠르기 때문에 Soynlp로 일부 전처리를 해준 뒤, Mecab 사용자 사전에 신조어등을 넣어주면 훨씬 좋은 Tokenizing이 될 것 같다.
 
 ## Reference
 * https://blog.pingpong.us/dialog-bert-tokenizer/#%EA%B3%B5%EB%B0%B1-%EA%B8%B0%EB%B0%98-tokenizer
